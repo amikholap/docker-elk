@@ -1,0 +1,18 @@
+elasticsearch:
+  build: elasticsearch
+logstash:
+  image: logstash
+  ports:
+    - "6987:6987/udp"
+  volumes:
+    - etc/logstash.conf:/etc/logstash.conf:ro
+  links:
+    - elasticsearch
+  command: logstash agent --config=/etc/logstash.conf --log=/var/log/logstash.log
+kibana:
+  build: kibana
+  ports:
+    - "80:5601"
+  links:
+    - elasticsearch
+  command: /opt/kibana/bin/kibana -e http://elasticsearch:9200

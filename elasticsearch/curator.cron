@@ -1,0 +1,1 @@
+@daily root curator delete --disk-space=8 indices
